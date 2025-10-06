@@ -5,8 +5,32 @@
 ![](viveros.png)
 
 ---
+### **Vivero**
 
-# FALTA VIVEROS ZONAS, PLUS 3
+Centro físico donde se cultivan y almacenan productos y plantas.
+
+* **Cod_vivero** *(PK, entero)* → Identificador único del vivero.
+  Ej: `V01`, `V02`.
+* **Nombre** *(texto)* → Nombre del vivero.
+  Ej: `Vivero Norte`, `Vivero Sur`.
+* **Longitud / Latitud** *(decimal)* → Coordenadas geográficas.
+  Ej: `(-16.25, 28.48)`.
+
+---
+
+### **Zona**
+
+Áreas específicas dentro de cada vivero donde se agrupan productos.
+
+* **Cod_zona** *(PK, entero)* → Identificador de la zona.
+  Ej: `Z01`, `Z05`.
+* **Nombre** *(texto)* → Descripción o nombre de la zona.
+  Ej: `Zona tropical`, `Zona almacén`.
+* **Longitud / Latitud** *(decimal)* → Coordenadas de ubicación.
+  Ej: `(-16.26, 28.49)`.
+
+---
+
 ### **Cliente**
 
 Representa a las personas o empresas que realizan pedidos a la empresa Tajinaste S.A.
@@ -21,6 +45,20 @@ Representa a las personas o empresas que realizan pedidos a la empresa Tajinaste
   Ej: `+34 5555555555`.
 * **Correo** *(texto)* → Correo electrónico del cliente.
   Ej: `maria@correo.com`.
+
+---
+
+### **Tajinaste Plus**
+
+Programa de fidelización para clientes frecuentes.
+
+* **Cod_plus** *(PK, entero)* → Identificador único del programa Plus.
+  Ej: `PL001`.
+* **Cod_cliente** *(FK)* → Cliente asociado.
+* **Fecha_ingreso** *(fecha)* → Fecha de adhesión al programa.
+  Ej: `2025-01-15`.
+* **Bonificación** *(decimal)* → Puntos o euros acumulados.
+  Ej: `12.50`.
 
 ---
 
@@ -73,24 +111,53 @@ Pedidos realizados por los clientes y gestionados por los empleados.
 ---
 
 
-
-
-# FALTA VIVEROS ZONAS Y PLUS 4
-
 ## **Relaciones**
 
-### **Realiza (Cliente – Pedido)**
 
-* Un cliente → puede realizar 1..N pedidos.
+### **Contiene (Vivero – Zona)**
+
+* Un vivero → contiene 1..N zonas.
+* Una zona → pertenece a 1 vivero.
+  Ejemplo: *Vivero Sur* contiene las zonas *Almacén* y *Exteriores*.
+
+---
+
+### **Tiene (Zona – Producto)**
+
+* Una zona → puede tener 0..N productos.
+* Un producto → puede estar en 1..N zonas.
+  Ejemplo: La *Zona Tropical* tiene los productos *Ficus* y *Helecho*.
+
+---
+
+### **Asignado (Empleado – Zona)**
+
+* Un empleado → puede estar asignado a 1 zonas.
+* Una zona → puede tener 1..N empleados.
+  Atributos: *fecha_inicio*, *fecha_fin*, *puesto*.
+  Ejemplo: *Carlos Pérez* trabaja en la *Zona Exterior* desde `2025-02-01`.
+
+---
+
+### **Tiene (Cliente – Tajinaste Plus)**
+
+* Un cliente → puede tener 0..1 Tajinaste Plus.
+* Un Tajinaste Plus → pertenece a 1 cliente.
+  Ejemplo: *María López* posee un programa *Tajinaste Plus* con bonificación de 20 €.
+
+
+### **Realiza (Tajinaste PLus – Pedido)**
+
+* Un cliente plus → puede realizar 1..N pedidos.
 * Un pedido → pertenece a 1 cliente.
 
 
 ---
 
-### **Atiende (Empleado – Pedido)**
+### **Gestionado (Empleado – Pedido)**
 
 * Un empleado → puede gestionar 0..N pedidos.
-* Un pedido → es atendido por 1 empleado.
+* Un pedido → es gestionado por 1 empleado.
 
 
 ---
