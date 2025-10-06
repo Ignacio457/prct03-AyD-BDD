@@ -2,7 +2,7 @@
 
 ## Modelo entidad/relación. Viveros Tajinaste S.A.
 
-![](viveros.png)
+![](ADBD3.png)
 
 ---
 ### **Vivero**
